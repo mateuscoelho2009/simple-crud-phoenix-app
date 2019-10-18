@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  phoenix-app:
+    build:
+      context: .
+    env_file:
+      - './env/phoenix.dev.env'
+    ports:
+      - '4000:4000'
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:12.0
+    env_file:
+      - './env/postgres.dev.env'
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
